@@ -12,7 +12,7 @@ const CategoryContent = () => {
   useEffect(() => {
     const fetchTrainers = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/Card');
+        const response = await axios.get('http://localhost:8080/plans/category/fitness');
         setTrainers(response.data);
       } catch (error) {
         console.error('Error fetching trainers: ', error);
@@ -26,30 +26,30 @@ const CategoryContent = () => {
   const indexOfFirstTrainer = indexOfLastTrainer - trainersPerPage;
   const currentTrainers = trainers.slice(indexOfFirstTrainer, indexOfLastTrainer);
 
-// Local filtering based on the selected category
-const filteredTrainers =
-selectedCategory === 'All'
-  ? currentTrainers
-  : currentTrainers.filter(
-      (trainer) =>
-        trainer.category && trainer.category.toLowerCase() === selectedCategory.toLowerCase()
-    );
+  // Local filtering based on the selected category
+  const filteredTrainers =
+    selectedCategory === 'All'
+      ? currentTrainers
+      : currentTrainers.filter(
+          (trainer) => trainer.category && trainer.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
 
-// Filter trainers based on search term
-const searchedTrainers = filteredTrainers.filter((trainer) => {
-const name = trainer.name || ''; // handle potential undefined name
-return name.toLowerCase().includes(searchTerm.toLowerCase());
-});
-      
-        const totalPages = Math.ceil(searchedTrainers.length / trainersPerPage);
-      
-        const handlePageChange = (pageNumber) => {
-          setCurrentPage(pageNumber);
-        };
+  // Filter trainers based on search term
+  const searchedTrainers = filteredTrainers.filter(
+    (trainer) => trainer.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(searchedTrainers.length / trainersPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    // Ensure the page number is within a valid range
+    const newPage = Math.max(1, Math.min(pageNumber, totalPages));
+    setCurrentPage(newPage);
+  };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex items-center justify-center flex-wrap mb-4 space-x-4">
+    <div className="container mx-auto p-4 bg-[#f5f5f5]">
+      <div className="flex items-center justify-center flex-wrap mb-4 space-x-4 ">
         {/* Search Input */}
         <div>
           <div className="relative text-gray-600 focus-within:text-gray-400">
@@ -83,8 +83,8 @@ return name.toLowerCase().includes(searchTerm.toLowerCase());
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mx-28 my-28">
         {searchedTrainers.map((trainer) => (
-          <div key={trainer.trainer_id} className="bg-white overflow-hidden rounded-lg shadow-md">
-            <Link to={`/trainers/${trainer.trainer_id}`}>
+          <div key={trainer.id} className="bg-[#f5f5f5] overflow-hidden rounded-lg shadow-md">
+            <Link to={`/trainers/${trainer.id}`}>
               <img
                 className="w-full h-56 object-cover"
                 src={trainer.image}
@@ -92,8 +92,8 @@ return name.toLowerCase().includes(searchTerm.toLowerCase());
               />
             </Link>
             <div className="p-4">
-              <p className="text-lg font-bold text-gray-800">{trainer.username}</p>
-              <p className="mt-1 text-sm text-gray-600">{trainer.experience}</p>
+              <p className="text-lg font-bold text-gray-800">{trainer.name}</p>
+              <p className="mt-1 text-sm text-gray-600">{trainer.category}</p>
               <p className="mt-2 text-sm text-gray-700">{trainer.description}</p>
             </div>
           </div>
@@ -102,7 +102,7 @@ return name.toLowerCase().includes(searchTerm.toLowerCase());
 
       <div className="flex justify-center mt-8">
         <button
-          className={`mx-2 p-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none rounded-full ${
+          className={`mx-2 p-2 bg-black text-white hover:bg-red-700 focus:outline-none rounded-md ${
             currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           onClick={() => handlePageChange(currentPage - 1)}
@@ -114,7 +114,7 @@ return name.toLowerCase().includes(searchTerm.toLowerCase());
           <button
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
-            className={`mx-2 p-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none rounded-full ${
+            className={`mx-2 p-2 bg-black text-white hover:bg-red-700 focus:outline-none rounded-md ${
               currentPage === index + 1 ? 'bg-gray-800' : ''
             }`}
           >
@@ -122,7 +122,7 @@ return name.toLowerCase().includes(searchTerm.toLowerCase());
           </button>
         ))}
         <button
-          className={`mx-2 p-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none rounded-full ${
+          className={`mx-2 p-2 bg-black text-white hover:bg-red-700 focus:outline-none rounded-md ${
             currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           onClick={() => handlePageChange(currentPage + 1)}

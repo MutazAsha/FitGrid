@@ -7,6 +7,11 @@ import Admain from "./Admain";
 import Home from "./Home";
 
 
+import axios from 'axios';
+import Cookies from 'js-cookie';
+// Set the Authorization header globally
+axios.defaults.headers.common['Authorization'] = `${Cookies.get('token')}`;
+
 function App() {
   return (
     <div className="App">

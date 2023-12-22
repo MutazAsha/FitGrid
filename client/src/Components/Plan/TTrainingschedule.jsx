@@ -73,9 +73,9 @@ const Trainingschedule = () => {
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg mx-auto my-8 max-w-screen-md">
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg mx-auto my-8 max-w-screen-md flex justify-end items-center ">
       <div className="p-6 ">
-      <h2 className="text-3xl font-semibold mb-4 text-gray-800">Bodybuilder's Nutrition Facts</h2>
+      <h2 className="text-3xl font-semibold mb-4 text-red-700">Bodybuilder's Nutrition Facts</h2>
         <table className="w-full text-left">
           <thead>
             <tr className="border-b">

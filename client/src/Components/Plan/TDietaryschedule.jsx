@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from 'react-router';
+
 
 const Dietaryschedule = () => {
   const [nutritionData, setNutritionData] = useState([]);
   const [newNutritionItem, setNewNutritionItem] = useState({
-    nutrient: '',
-    amount: '',
-    dailyValue: '',
+    nutrient: "",
+    amount: "",
+    daily_value: "",
   });
+
+  const { courseId } = useParams();
+  // console.log(courseId);
 
   useEffect(() => {
     fetchData();
@@ -15,19 +20,24 @@ const Dietaryschedule = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/Nutrition');
+      const response = await axios.get(
+        "http://localhost:8080/getNutritionDataForUser"
+      );
       setNutritionData(response.data);
     } catch (error) {
-      console.error('Error fetching nutrition data:', error);
+      console.error("Error fetching nutrition data:", error);
     }
   };
 
   const handleSave = async (item) => {
     try {
-      const response = await axios.put(`http://localhost:3000/Nutrition/${item.id}`, item);
-      console.log('Nutrition data updated successfully:', response.data);
+      const response = await axios.put(
+        `http://localhost:8080/nutrition/${item.id}`,
+        item
+      );
+      console.log("Nutrition data updated successfully:", response.data);
     } catch (error) {
-      console.error('Error updating nutrition data:', error);
+      console.error("Error updating nutrition data:", error);
     }
   };
 
@@ -39,10 +49,12 @@ const Dietaryschedule = () => {
       );
 
       // Send a request to delete the item from the server
-      const response = await axios.delete(`http://localhost:3000/Nutrition/${itemId}`);
-      console.log('Nutrition item deleted successfully:', response.data);
+      const response = await axios.delete(
+        `http://localhost:8080/nutrition/${itemId}`
+      );
+      console.log("Nutrition item deleted successfully:", response.data);
     } catch (error) {
-      console.error('Error deleting nutrition item:', error);
+      console.error("Error deleting nutrition item:", error);
 
       // Roll back the state if the request fails
       fetchData();
@@ -58,15 +70,32 @@ const Dietaryschedule = () => {
     );
   };
 
+  // const handleAddNutritionItem = async (user_id) => {
+  //   try {
+  //     const response = await axios.post(`http://localhost:8080/nutrition/${user_id}`, newNutritionItem);
+  //     console.log('Nutrition item added successfully:', response.data);
+  //     setNutritionData((prevNutritionData) => [...prevNutritionData, response.data]);
+  //     setNewNutritionItem({
+  //       nutrient: '',
+  //       amount: '',
+  //       daily_value: '',
+  //     });
+  //   } catch (error) {
+  //     console.error('Error adding nutrition item:', error);
+  //   }
+  // };
+
   const handleAddNutritionItem = async () => {
+    // const { courseId } = useParams();
     try {
-      const response = await axios.post('http://localhost:3000/Nutrition', newNutritionItem);
+      // console.log(courseId);
+      const response = await axios.post(`http://localhost:8080/nutrition/${courseId}`, newNutritionItem);
       console.log('Nutrition item added successfully:', response.data);
       setNutritionData((prevNutritionData) => [...prevNutritionData, response.data]);
       setNewNutritionItem({
         nutrient: '',
         amount: '',
-        dailyValue: '',
+        daily_value: '',
       });
     } catch (error) {
       console.error('Error adding nutrition item:', error);
@@ -74,9 +103,11 @@ const Dietaryschedule = () => {
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg mx-auto my-8 max-w-screen-md">
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg mx-auto my-8 max-w-screen-md">
       <div className="p-6">
-        <h2 className="text-3xl font-semibold mb-4 text-gray-800">Bodybuilder's Nutrition Facts</h2>
+        <h2 className="text-3xl font-semibold mb-4 text-red-700">
+          Bodybuilder's Nutrition Facts
+        </h2>
         <table className="w-full text-left">
           <thead>
             <tr className="border-b">
@@ -88,26 +119,32 @@ const Dietaryschedule = () => {
           </thead>
           <tbody>
             {nutritionData.map((item, index) => (
-              <tr key={index} className={index % 2 === 0 ? '' : ''}>
+              <tr key={index} className={index % 2 === 0 ? "" : ""}>
                 <td className="py-2">
                   <input
                     type="text"
                     value={item.nutrient}
-                    onChange={(e) => handleInputChange(item.id, 'nutrient', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(item.id, "nutrient", e.target.value)
+                    }
                   />
                 </td>
                 <td className="py-2">
                   <input
                     type="text"
                     value={item.amount}
-                    onChange={(e) => handleInputChange(item.id, 'amount', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(item.id, "amount", e.target.value)
+                    }
                   />
                 </td>
                 <td className="py-2">
                   <input
                     type="text"
-                    value={item.dailyValue}
-                    onChange={(e) => handleInputChange(item.id, 'dailyValue', e.target.value)}
+                    value={item.daily_value}
+                    onChange={(e) =>
+                      handleInputChange(item.id, "daily_value", e.target.value)
+                    }
                   />
                 </td>
                 <td className="py-2">
@@ -132,7 +169,10 @@ const Dietaryschedule = () => {
                   type="text"
                   value={newNutritionItem.nutrient}
                   onChange={(e) =>
-                    setNewNutritionItem({ ...newNutritionItem, nutrient: e.target.value })
+                    setNewNutritionItem({
+                      ...newNutritionItem,
+                      nutrient: e.target.value,
+                    })
                   }
                 />
               </td>
@@ -141,16 +181,22 @@ const Dietaryschedule = () => {
                   type="text"
                   value={newNutritionItem.amount}
                   onChange={(e) =>
-                    setNewNutritionItem({ ...newNutritionItem, amount: e.target.value })
+                    setNewNutritionItem({
+                      ...newNutritionItem,
+                      amount: e.target.value,
+                    })
                   }
                 />
               </td>
               <td className="py-2">
                 <input
                   type="text"
-                  value={newNutritionItem.dailyValue}
+                  value={newNutritionItem.daily_value}
                   onChange={(e) =>
-                    setNewNutritionItem({ ...newNutritionItem, dailyValue: e.target.value })
+                    setNewNutritionItem({
+                      ...newNutritionItem,
+                      daily_value: e.target.value,
+                    })
                   }
                 />
               </td>

@@ -1,34 +1,45 @@
-// UpdateBlog.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const UpdateBlog = ({ onClose, blogData }) => {
   const [formData, setFormData] = useState({
-    blog_title: "",
-    blog_img: "",
-    blog_autor: "",
-    blog_subdescription: "",
-    blog_description: "",
-    // ... Add the remaining fields specific to the blog here
+    title: "",
+    content: "",
+    image: null, // Change to null as we'll be dealing with a file
   });
 
   useEffect(() => {
     // When blogData changes (when updating the form)
     if (blogData) {
-      setFormData(blogData);
+      setFormData({
+        title: blogData.title || "",
+        content: blogData.content || "",
+        image: null, // Clear the image when loading new data
+      });
     }
   }, [blogData]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "image") {
+      // Handle file upload separately
+      setFormData({ ...formData, image: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // Use FormData to handle file uploads
+      const formDataToSend = new FormData();
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("content", formData.content);
+      formDataToSend.append("image", formData.image);
+
       // Send data to update the blog
-      await axios.put(`http://localhost:3000/blog/${blogData.id}`, formData);
+      await axios.put(`http://localhost:8080/updateArticle/${blogData.id}`, formDataToSend);
 
       // Upon successful completion, close the form
       onClose();
@@ -41,69 +52,43 @@ const UpdateBlog = ({ onClose, blogData }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="blog_title">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
           Blog Title
         </label>
         <input
           type="text"
-          id="blog_title"
-          name="blog_title"
-          value={formData.blog_title}
+          id="title"
+          name="title"
+          value={formData.title}
           onChange={handleChange}
           className="w-full p-2 border rounded"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="blog_img">
-          Blog Image URL
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+          Blog Image
         </label>
         <input
-          type="text"
-          id="blog_img"
-          name="blog_img"
-          value={formData.blog_img}
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
           onChange={handleChange}
           className="w-full p-2 border rounded"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="blog_autor">
-          Blog Author
-        </label>
-        <input
-          type="text"
-          id="blog_autor"
-          name="blog_autor"
-          value={formData.blog_autor}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="blog_subdescription">
-          Blog Subdescription
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="content">
+          Blog Content
         </label>
         <textarea
-          id="blog_subdescription"
-          name="blog_subdescription"
-          value={formData.blog_subdescription}
+          id="content"
+          name="content"
+          value={formData.content}
           onChange={handleChange}
           className="w-full p-2 border rounded"
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="blog_description">
-          Blog Description
-        </label>
-        <textarea
-          id="blog_description"
-          name="blog_description"
-          value={formData.blog_description}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      {/* Add the remaining fields here */}
       <div className="flex justify-end">
         <button
           type="submit"

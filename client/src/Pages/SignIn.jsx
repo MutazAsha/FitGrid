@@ -29,10 +29,13 @@ const SignIn = () => {
 
       const token = response.data.accessToken; // Make sure to access the correct property
       const user_id = response.data.Id; // Make sure to access the correct property
+      const role_id = response.data.userRole; 
       console.log('Token:', token);
 
       Cookies.set('token', token);
       Cookies.set('user_id', user_id);
+      Cookies.set('role_id', role_id);
+
 
       setError('Sign-in successful');
       history('/');
@@ -74,7 +77,7 @@ const SignIn = () => {
         <br/><br/>
         <button
           onClick={handleSignIn}
-          className={`w-full p-3 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-md mt-4 hover:opacity-90 ${loading && 'opacity-50 cursor-not-allowed'}`}
+          className={`w-full p-3 bg-gradient-to-r from-red-700 to-red-600 text-white rounded-md mt-4 hover:opacity-90 ${loading && 'opacity-50 cursor-not-allowed'}`}
           disabled={loading}
         >
           {loading ? 'Signing In...' : 'Sign In'}

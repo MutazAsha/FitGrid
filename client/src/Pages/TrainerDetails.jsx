@@ -24,34 +24,38 @@ const TrainerDetails = () => {
   }, [id]);
 
   if (loading) {
-    return <p>Loading...</p>; 
+    return <p className="text-center text-gray-500 text-xl mt-4">Loading...</p>;
   }
 
   return (
-    <div className="container mx-auto my-24 p-4 md:p-8 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 rounded-md shadow-md text-white">
-      <div className="md:flex items-center justify-center">
-        <div className="md:shrink-0 ml-8 ">
+    <div className=" p-8 bg-gray-100 mt-24">
+      <div className="md:flex items-center justify-center mb-8">
+        <div className="md:shrink-0 mr-6">
           <img
-            className="h-64 w-full object-cover md:h-full md:w-64 rounded-md"
+            className="h-64 w-full object-cover md:h-full md:w-64 rounded-md border-4"
             src={trainer.profileimage}
             alt={`Image of ${trainer.username}`}
           />
         </div>
-        <div className="md:ml-8 mt-4 md:mt-0">
-          <h2 className="text-3xl font-bold hover:underline">
+        <div className="md:ml-6 mt-4 md:mt-0">
+          <h2 className="text-4xl font-extrabold hover:underline text-red-700">
             Name: {trainer.username}
           </h2>
-          <div className="uppercase tracking-wide text-sm text-teal-300 font-semibold mt-2">
-            {trainer.certification}
+          <div className="uppercase tracking-wide text-lg font-semibold mt-2">
+            Certification: {trainer.certification}
           </div>
-          <p className="mt-2 text-gray-200 text-lg">
-            {trainer.experience}
+          <p className="mt-2 text-gray-600 text-lg">
+            Experience: {trainer.experience} years
           </p>
         </div>
       </div>
       <Pricing />
-      <div className=" text-white text-center py-2 mt-8">
-        <Link to="/trainers" className="text-sm font-medium hover:underline">
+      
+      <div className="text-center py-4 ">
+        <Link
+          to="/trainers"
+          className="inline-block text-sm px-4 py-2 leading-none border rounded-md bg-red-700 text-white border-red-700 hover:border-transparent hover:text-white hover:bg-gray-800"
+        >
           &larr; Back to Trainers
         </Link>
       </div>

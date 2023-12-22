@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const AchievementCard = ({ value, description }) => (
-  <div className="flex flex-col justify-center items-center bg-gradient-to-r from-[#22092C] to-[#363636] p-6 md:p-8 h-[156px] w-[156px] md:w-[240px] md:h-[240px] rounded-full justify-self-center overflow-hidden transition-transform transform hover:scale-105 ease-in-out duration-300 shadow-lg">
+  <div className="flex flex-col justify-center items-center bg-gradient-to-r from-[#000000] to-[#484848] bg-[] p-6 md:p-8 h-[156px] w-[156px] md:w-[240px] md:h-[240px] rounded-full justify-self-center overflow-hidden transition-transform transform hover:scale-105 ease-in-out duration-300 shadow-lg">
     <div className="flex flex-row justify-center items-center">
       <p className="font-bold text-3xl sm:text-4xl lg:text-5xl leading-9 text-white ml-2">{value}</p>
     </div>
