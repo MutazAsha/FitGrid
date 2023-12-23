@@ -38,15 +38,15 @@ const Pricing = () => {
     <div className="min-w-screen min-h-screen bg-gradient-to-r from-blak-500 via-gray-500 to-gray-500 px-5 py-5">
       <div className="w-full mx-auto bg-[#f5f5f5] px-5 py-10 text-gray-800 mb-10 rounded-md ">
         <div className="text-center max-w-xl mx-auto">
-          <h1 className="text-4xl mb-6 font-bold text-black">
+          <h1 className="text-3xl mb-6 font-bold text-black">
             Discover Our Plans
           </h1>
-          <p className="text-lg mb-10 text-black">
+          <p className="text-md mb-2 text-black">
             Select a plan that suits your requirements. Lorem ipsum dolor sit
             amet consectetur adipisicing elit.
           </p>
         </div>
-        <div className="max-w-4xl mx-auto md:flex">
+        <div className="max-w-4xl gap-8 mx-auto md:flex">
           {pricingData.slice(0, 3).map((item, index) => (
             <div
               key={index}

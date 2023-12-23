@@ -203,7 +203,7 @@ const Exercises = () => {
   return (
     
     <div className=" px-24 py-28 bg-[#f5f5f5]">
-      <div className="flex items-center justify-between mb-8 ">
+      <div className="flex items-center justify-between mb-8  ">
         <div className="flex items-center space-x-4 ">
           <label htmlFor="category" className="text-gray-800 font-bold">
             Category:
@@ -255,7 +255,7 @@ const Exercises = () => {
         </div>
       </div>
 
-      <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-white" >
+      <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-[#f5f5f5]" >
         {searchedExercises.map((exercise) => (
           <div key={exercise.id} className="overflow-hidden rounded shadow-lg hover:shadow-xl">
             <img

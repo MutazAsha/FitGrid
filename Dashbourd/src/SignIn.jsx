@@ -82,7 +82,7 @@ const SignIn = () => {
         >
           {loading ? 'Signing In...' : 'Sign In'}
         </button>
-        <br/><br/>
+        {/* <br/><br/>
         <p className="text-center text-sm text-gray-700">
           Don't have an account yet?
           <a href="/Signup" className="font-semibold text-indigo-500 hover:underline focus:text-indigo-800 focus:outline-none">
@@ -99,7 +99,7 @@ const SignIn = () => {
             />
             <span>Login with Google</span>
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );
