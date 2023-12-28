@@ -21,7 +21,7 @@ const Dietaryschedule = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/getNutritionDataForUser"
+        `http://localhost:8080/getNutritionDataForUserByTrainerId/${courseId}`
       );
       setNutritionData(response.data);
     } catch (error) {

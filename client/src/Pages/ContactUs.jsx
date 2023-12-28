@@ -28,7 +28,7 @@ const ContactUs = () => {
 
   return (
     <div>
-      <section className="body-font relative bg-[#f5f5f5] text-gray-800 mt-16">
+      <section className="body-font relative bg-[#f5f5f5] text-gray-800 mt-8">
         <div className="container mx-auto px-5 py-24">
           <div className="mb-12 flex w-full flex-col text-center">
             <h1 className="title-font mb-4 text-2xl font-medium text-gray-800 sm:text-3xl">

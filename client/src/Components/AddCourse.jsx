@@ -12,7 +12,10 @@ const AddTrainingCoursePage = () => {
     image: null,
   });
 
-  const { name, category, duration, price, description,features, image } = formData;
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { name, category, duration, price, description, features, image } = formData;
 
   const Category = ['Fitness', 'Grossfit', 'Cardio', 'Body Building'];
 
@@ -35,32 +38,43 @@ const AddTrainingCoursePage = () => {
       formData.append('duration', duration);
       formData.append('price', price);
       formData.append('description', description);
-formData.append('features', features);
+      formData.append('features', features);
       if (image) {
         formData.append('image', image);
       }
 
       const response = await axios.post('http://localhost:8080/createPlan', formData, {
-        
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      
+
+      // Display success message
+      setSuccessMessage('Training course added successfully');
+      setErrorMessage(''); // Clear any previous error message
+
       // You can perform further processing here as needed
 
       console.log('Training course data sent:', response.data);
     } catch (error) {
+      // Display error message
+      setErrorMessage('An error occurred while adding the training course');
+      setSuccessMessage(''); // Clear any previous success message
+
       console.error('An error occurred while sending data:', error.message);
     }
   };
 
   return (
-    <div className="BlogForm bg-white p-8 rounded-lg ">
+    <div className="BlogForm bg-white p-8 rounded-lg">
       <h2 className="text-3xl font-semibold mb-6 text-red-700 text-center">Create a New Plan</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      {successMessage && <div className="text-green-500 mb-4">{successMessage}</div>}
+      {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2">
         <div className="w-full">
-          <label className="block mb-2 text-sm font-bold text-gray-600 text-center" htmlFor="name">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="name">
             Course Name
           </label>
           <input
@@ -70,12 +84,12 @@ formData.append('features', features);
             value={name}
             onChange={handleInputChange}
             required
-            className="w-full p-2 border rounded-md"
+            className="w-full p-1 border rounded text-xs"
           />
         </div>
 
         <div className="w-full">
-          <label className="block mb-2 text-sm font-bold text-gray-600 text-center" htmlFor="category">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="category">
             Category
           </label>
           <select
@@ -84,7 +98,7 @@ formData.append('features', features);
             value={category}
             onChange={handleInputChange}
             required
-            className="w-full p-2 border rounded-md"
+            className="w-full p-1 border rounded text-xs"
           >
             <option value="" disabled>Select a Category</option>
             {Category.map((cat) => (
@@ -94,7 +108,7 @@ formData.append('features', features);
         </div>
 
         <div className="w-full">
-          <label className="block mb-2 text-sm font-bold text-gray-600 text-center" htmlFor="duration">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="duration">
            Duration
           </label>
           <input
@@ -104,12 +118,12 @@ formData.append('features', features);
             value={duration}
             onChange={handleInputChange}
             required
-            className="w-full p-2 border rounded-md"
+            className="w-full p-1 border rounded text-xs"
           />
         </div>
 
         <div className="w-full">
-          <label className="block mb-2 text-sm font-bold text-gray-600 text-center" htmlFor="price">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="price">
             Price
           </label>
           <input
@@ -119,12 +133,12 @@ formData.append('features', features);
             value={price}
             onChange={handleInputChange}
             required
-            className="w-full p-2 border rounded-md"
+            className="w-full p-1 border rounded text-xs"
           />
         </div>
 
         <div className="w-full">
-          <label className="block mb-2 text-sm font-bold text-gray-600 text-center" htmlFor="image">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="image">
             Image
           </label>
           <input
@@ -133,12 +147,12 @@ formData.append('features', features);
             name="image"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full p-2 border rounded-md"
+            className="w-full p-1 border rounded text-xs"
           />
         </div>
 
         <div className="w-full">
-          <label className="block mb-2 text-sm font-bold text-gray-600 text-center" htmlFor="features">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="features">
           features
           </label>
           <textarea
@@ -147,12 +161,12 @@ formData.append('features', features);
             value={features}
             onChange={handleInputChange}
             required
-            className="w-full p-2 border rounded-md"
+            className="w-full p-1 border rounded text-xs"
           />
         </div>
 
         <div className="w-full">
-          <label className="block text-sm font-medium text-gray-600" htmlFor="description">
+          <label className="block text-gray-700 text-xs font-bold mb-1" htmlFor="description">
             Description
           </label>
           <textarea
@@ -161,17 +175,17 @@ formData.append('features', features);
             value={description}
             onChange={handleInputChange}
             required
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-red-700"
+            className="w-full p-1 border rounded text-xs"
           />
         </div>
-<br></br>
+        <div className="col-span-2 flex justify-center">
       <button
           type="submit"
-          className="bg-black text-white hover:bg-gray-800 p-2 rounded-md mt-4 cursor-pointer mx-auto block w-20 h-10"
+          className="bg-black text-white hover:bg-gray-800 p-1 rounded-md mt-2 cursor-pointer block w-24 text-md"
         >
           Add Plan
         </button>
-
+</div>
       </form>
     </div>
   );

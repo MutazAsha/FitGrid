@@ -42,7 +42,7 @@ const Trainers = () => {
     setCurrentPage(pageNumber);
   };
 
-  const categories = ['All', 'Fitness', 'CROSSFIT', 'Bodybuilding'];
+  const categories = ['All', 'fitness', 'crossfit','cardio', 'Body Building'];
 
   return (
     <div className=" px-24 py-28 bg-[#f5f5f5]">

@@ -99,15 +99,16 @@ const WorkoutPage = () => {
       });
   };
 
-  return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center ml-20 items-center">
-    <table className="w-9/12 h-5/6 bg-[#f5f5f5] my-6 md:ml-24 px-10 py-8 rounded-lg shadow-md">
-      <thead className="bg-red-700 text-white "> {/* Use red-700 for the header background */}
+ return (
+  <div className="min-h-screen bg-[#f5f5f5] flex justify-center items-center">
+      <div className="overflow-auto rounded-lg shadow w-full sm:max-w-3xl my-12 mx-4 sm:mx-8">
+        <table className="w-full bg-[#f5f5f5] table-auto">
+          <thead className="bg-red-700 text-white">
           <tr>
-            <th className="py-2 px-4">Title</th>
-            <th className="py-2 px-4">Description</th>
-            <th className="py-2 px-4">Image</th>
-            <th className="py-2 px-4">Actions</th>
+            <th className="py-2 px-2 md:px-4">Title</th>
+            <th className="py-2 px-2 md:px-4">Description</th>
+            <th className="py-2 px-2 md:px-4">Image</th>
+            <th className="py-2 px-2 md:px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -116,7 +117,7 @@ const WorkoutPage = () => {
               key={index}
               className={`border-b hover:bg-gray-200 ${index % 2 === 0 ? 'bg-white' : ''}`}
             >
-              <td className="py-2 px-4 text">
+              <td className="py-2 px-2 md:px-4 text">
                 <input
                   type="text"
                   value={exercise.title}
@@ -124,7 +125,7 @@ const WorkoutPage = () => {
                   onChange={(e) => handleInputChange(exercise.id, 'title', e.target.value)}
                 />
               </td>
-              <td className="py-2 px-4">
+              <td className="py-2 px-2 md:px-4">
                 <input
                   type="text"
                   value={exercise.content}
@@ -132,15 +133,15 @@ const WorkoutPage = () => {
                   onChange={(e) => handleInputChange(exercise.id, 'content', e.target.value)}
                 />
               </td>
-              <td className="py-2 px-4">
-                <img src={exercise.image_url} alt={exercise.title} className="max-h-20" />
+              <td className="py-2 px-2 md:px-4">
+                <img src={exercise.gif_url} alt={exercise.title} className="max-h-20 w-auto" />
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
                 />
               </td>
-              <td className="py-2 px-4 flex justify-end space-x-2">
+              <td className="py-2 px-2 md:px-4 flex flex-col md:flex-row md:justify-end space-y-2 md:space-y-0">
                 <button
                   type="button"
                   className="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
@@ -159,7 +160,7 @@ const WorkoutPage = () => {
             </tr>
           ))}
           <tr className="border-b hover:bg-gray-200">
-            <td className="py-2 px-4">
+            <td className="py-2 px-2 md:px-4">
               <input
                 type="text"
                 value={newExercise.title}
@@ -168,7 +169,7 @@ const WorkoutPage = () => {
                 onChange={(e) => setNewExercise({ ...newExercise, title: e.target.value })}
               />
             </td>
-            <td className="py-2 px-4">
+            <td className="py-2 px-2 md:px-4">
               <input
                 type="text"
                 value={newExercise.content}
@@ -177,14 +178,14 @@ const WorkoutPage = () => {
                 onChange={(e) => setNewExercise({ ...newExercise, content: e.target.value })}
               />
             </td>
-            <td className="py-2 px-4">
+            <td className="py-2 px-2 md:px-4">
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
               />
             </td>
-            <td className="py-2 px-4 flex justify-end">
+            <td className="py-2 px-2 md:px-4 flex justify-end">
               <button
                 type="button"
                 className="text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
@@ -197,7 +198,9 @@ const WorkoutPage = () => {
         </tbody>
       </table>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default WorkoutPage;

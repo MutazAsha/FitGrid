@@ -126,6 +126,7 @@ import TCourseDetails from "./Pages/TCourseDetails";
 import JoinOurTeam from "./Components/JoinOurTeam";
 import AllBlog from "./Pages/AllBlog";
 import Privacypolicypage from "./Pages/Privacypolicypage";
+import TUserList from "./Components/Plan/TUserList";
 
 // Set the Authorization header globally
 axios.defaults.headers.common['Authorization'] = `${Cookies.get('token')}`;
@@ -162,6 +163,7 @@ function App() {
 
             {/* ... other protected routes */}
             
+            
             <Route path="*" element={<NotFound />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ContactUs />} />
@@ -179,6 +181,7 @@ function App() {
             <Route path="/Privacypolicypage" element={<Privacypolicypage />} />
             <Route path="/course-details/:courseId" element={<CourseDetails />} />
             <Route path="/Tcourse-details/:courseId" element={<TCourseDetails />} />
+            <Route path="/TUserList/:id" element={<TUserList/>} />
           </Routes>
         </div>
         <Footer />

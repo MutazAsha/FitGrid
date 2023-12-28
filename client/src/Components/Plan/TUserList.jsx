@@ -1,19 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Link, useParams } from "react-router-dom";
+// import { Params } from "react-router-dom";
+
+// const TUserList = () => {
+//   const [users, setUsers] = useState([]);
+//   const {id} =  useParams();
+//   // console.log(id);
+//   useEffect(() => {
+//     // Fetch user data when the component mounts
+//     axios
+//       .get(`http://localhost:8080/subscribers/plan/${id}`)
+//       .then((response) => {
+//         setUsers(response.data.users);
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching user data:", error);
+//       });
+//   }, []);
+
+//   const handleViewDetails = (userId) => {
+//     // Fetch details for the selected user
+//     axios
+//       .get(`http://localhost:8080/subscribers/${userId}`)
+//       .then((response) => {
+//         setSelectedUserDetails(response.data);
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching user details:", error);
+//       });
+
+//     // Set the selected user ID
+//     setSelectedUserId(userId);
+//   };
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
 const TUserList = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUserDetails, setSelectedUserDetails] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
     // Fetch user data when the component mounts
-    axios.get('https://api.example.com/users')
-      .then(response => {
-        setUsers(response.data);
+    axios
+      .get(`http://localhost:8080/subscribers/plan/${id}`)
+      .then((response) => {
+        setUsers(response.data.users);
       })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
       });
-  }, []);
+  }, [id]);
+
+  const handleViewDetails = (userId) => {
+    // Fetch details for the selected user
+    axios
+      .get(`http://localhost:8080/subscribers/${userId}`)
+      .then((response) => {
+        setSelectedUserDetails(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user details:", error);
+      });
+
+    // Set the selected user ID
+    setSelectedUserId(userId);
+  };
 
   return (
     <div>
@@ -38,15 +93,26 @@ const TUserList = () => {
                   <th className="px-5 py-3">Full Name</th>
                   <th className="px-5 py-3">Email</th>
                   <th className="px-5 py-3">Created at</th>
+                  <th className="px-5 py-3"></th>
                 </tr>
               </thead>
               <tbody className="text-gray-500">
-                {users.map(user => (
+                {users.map((user) => (
                   <tr key={user.id}>
-                    <td className="px-5 py-3">{user.id}</td>
-                    <td className="px-5 py-3">{user.fullName}</td>
+                    <td className="px-5 py-3">{user.user_id}</td>
+                    <td className="px-5 py-3">{user.username}</td>
                     <td className="px-5 py-3">{user.email}</td>
-                    <td className="px-5 py-3">{user.createdAt}</td>
+                    <td className="px-5 py-3">
+                      {user.created_at?.split("T")[0]}
+                    </td>
+                    <td className="px-5 py-3">
+                      <Link
+                        to={`/Tcourse-details/${user.user_id}`}
+                        className="bg-red-700 text-white px-3 py-1 rounded"
+                      >
+                        View Details
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>

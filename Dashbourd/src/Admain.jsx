@@ -14,6 +14,7 @@ import JoinOurTeam from "./JoinOurTeam";
 import fit from "./Images/fit.png";
 
 
+
 const Admain = () => {
   const [user, setUser] = useState([]);
   const [page, setPage] = useState("Dashboard");
@@ -21,13 +22,31 @@ const Admain = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8080/api/admin-only")
+  //     .then((response) => {
+  //       setUser(response.data);
+  //       // console.log(response.data);
+  //       if (response.data.success) {
+  //         navigate("/home");
+  //       }
+  //       // setPhotoPreview(response.data.profile_image_name);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching user data:", error);
+  //     });
+  // }, []);
+
  
   const [isSideOpen, setIsSideOpen] = useState(true);
   const [position, setPosition] = useState("left-0");
 
   function logout() {
     removeCookie("token");
-    navigate("/SignIn");
+    removeCookie("role_id");
+    removeCookie("user_id");
+    navigate("/");
   }
 
   function openSideBar() {
@@ -41,7 +60,7 @@ const Admain = () => {
 
   
   return (
-    <div className="flex h-full bg-[#f5f5f5] overflow-x-hidden">
+    <div className="flex h-full bg-[#f5f5f5] overflow-x-hidden ">
       {/* sidebar */}
       <div className="w-[260px] h-full fixed ">
         <div
@@ -84,7 +103,7 @@ const Admain = () => {
             id="closeSideBar"
             className={`${
               isSideOpen ? "block" : "hidden"
-            } lg:hidden h-10 w-10 bg-grey-600 absolute right-0 mt-16 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer text-white`}
+            } lg:hidden h-10 w-10 bg-grey-600 absolute right-0 mt-16 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer bg-gray-600 text-white`}
             onClick={openSideBar}
           >
             <svg
@@ -106,7 +125,7 @@ const Admain = () => {
           </button>
           <aside className="flex flex-col w-64  px-5 py-8  bg-black   ">
   <div className="flex flex-col justify-between flex-1 ">
-  <img src={fit} className="mr-3 flex  items-center h-28 w-28 ml-14 " alt="CraftVine Logo" />
+  <img src={fit} className="mr-3 flex  items-center h-32 w-32 ml-10 " alt="CraftVine Logo" />
 
     <nav className="-mx-3 space-y-6">
       <div className="space-y-3 ">
@@ -119,7 +138,7 @@ const Admain = () => {
    
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200  ${
-            page === "Dashboard" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "Dashboard" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("Dashboard")}
         >
@@ -128,7 +147,7 @@ const Admain = () => {
 
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "Users" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "Users" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("Users")}
         >
@@ -137,15 +156,15 @@ const Admain = () => {
 
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "Blogs" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
-          } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
+            page === "Blogs" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
+          } hover:bg-red-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("Blogs")}
         >
           <span className="mx-2 text-sm font-medium">Blogs</span>
         </button>
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "Courses" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "Courses" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("Courses")}
         >
@@ -154,7 +173,7 @@ const Admain = () => {
 
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "Contactus" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "Contactus" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("Contactus")}
         >
@@ -163,7 +182,7 @@ const Admain = () => {
 
           <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "Category" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "Category" && "bg-red-700 dark:bg-redred-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("Category")}
         >
@@ -172,7 +191,7 @@ const Admain = () => {
 
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "WorkoutPage" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "WorkoutPage" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("WorkoutPage")}
         >
@@ -180,7 +199,7 @@ const Admain = () => {
         </button>
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "FAQ" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "FAQ" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("FAQ")}
         >
@@ -188,7 +207,7 @@ const Admain = () => {
         </button>
         <button
           className={`w-full flex items-center px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
-            page === "JoinOurTeam" && "bg-red-700 dark:bg-gray-800 dark:text-gray-200 text-gray-700"
+            page === "JoinOurTeam" && "bg-red-700 dark:bg-red-800 dark:text-gray-200 text-gray-700"
           } hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`}
           onClick={() => setPage("JoinOurTeam")}
         >

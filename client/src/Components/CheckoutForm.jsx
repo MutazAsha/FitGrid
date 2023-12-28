@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { ElementsConsumer, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardSection from "./CardSection";

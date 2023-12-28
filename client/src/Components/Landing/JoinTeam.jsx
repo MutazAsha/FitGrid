@@ -11,7 +11,7 @@ const JoinTeam = () => {
               Join our Team
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-              Experience the benefits of our community. No obligations, just join and explore.
+            Join FitGrid. Be part of our club that allows you to showcase your training plans.
             </p>
             
             <div className="mt-12 flex items-center justify-center gap-x-6">

@@ -34,13 +34,13 @@ const Users = () => {
 
   const handleDelete = (userId) => {
     // Get the user to be deleted
-    const userToDelete = users.find(user => user.id === userId);
-  
+    const userToDelete = users.find(user => user.user_id === userId);
+    // console.log(userToDelete);
     // Optimistically remove the user from the local state
-    setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+    setUsers(prevUsers => prevUsers.filter(user => user.user_id !== userId));
   
     // Send a request to delete the user from the server
-    axios.put('http://localhost:8080/DeleteUser', { data: userToDelete })
+    axios.put(`http://localhost:8080/DeleteUser/${userToDelete.user_id}`, { data: userToDelete })
       .then(response => {
         // Handle success, e.g., show a success message
         console.log('User deleted successfully:', response.data);
@@ -89,109 +89,112 @@ const Users = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center ml-20 items-center">
-    <table className="w-9/12 h-5/6 bg-[#f5f5f5] my-6 md:ml-24 px-10 py-8 rounded-lg shadow-md">
-      <thead className="bg-red-700 text-white "> {/* Use red-700 for the header background */}
-        <tr>
-          <th className="py-2 px-4">Name</th>
-          <th className="py-2 px-4">Email</th>
-          <th className="py-2 px-4">Role</th>
-          <th className="py-2 px-4">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user, index) => (
-          <tr
-            key={index}
-            className={`border-b hover:bg-gray-100 ${index % 2 === 0 ? 'bg-white' : ''}`}
-          >
-            <td className="py-2 px-4">
-              <input
-                type="text"
-                value={user.username}
-                className="w-full bg-transparent"
-                onChange={(e) => handleInputChange(user.id, 'username', e.target.value)}
-              />
-            </td>
-            <td className="py-2 px-4">
-              <input
-                type="text"
-                value={user.email}
-                className="w-full bg-transparent"
-                onChange={(e) => handleInputChange(user.id, 'email', e.target.value)}
-              />
-            </td>
-            <td className="py-2 px-4">
-              <select
-                value={user.userrole}
-                className="bg-transparent"
-                onChange={(e) => handleInputChange(user.id, 'userrole', e.target.value)}
+    <div className="min-h-screen bg-[#f5f5f5] flex justify-center items-center ">
+      <div className="overflow-auto rounded-lg shadow w-full sm:max-w-3xl my-12 mx-4 sm:mx-8  ">
+        <table className="w-full bg-[#f5f5f5] table-auto">
+          <thead className="bg-red-700 text-white">
+            <tr>
+              <th className="py-2 px-4">Name</th>
+              <th className="py-2 px-4">Email</th>
+              <th className="py-2 px-4">Role</th>
+              <th className="py-2 px-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr
+                key={index}
+                className={`border-b hover:bg-gray-100 ${index % 2 === 0 ? 'bg-white' : ''}`}
               >
-                <option value="user">user</option>
-                <option value="trainer">trainer</option>
-              </select>
-            </td>
-            <td className="py-2 px-4 flex justify-end space-x-2">
-              <button
-                type="button"
-                className="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                onClick={() => handleSave(user)}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                onClick={() => handleDelete(user.id)}
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-        <tr>
-          <td className="py-2 px-4">
-            <input
-              type="text"
-              value={newUser.username}
-              className="w-full bg-transparent"
-              placeholder="New Name"
-              onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-            />
-          </td>
-          <td className="py-2 px-4">
-            <input
-              type="text"
-              value={newUser.email}
-              className="w-full bg-transparent"
-              placeholder="New Email"
-              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-            />
-          </td>
-          <td className="py-2 px-4">
-            <select
-              value={newUser.userrole}
-              className="bg-transparent"
-              onChange={(e) => setNewUser({ ...newUser, userrole: e.target.value })}
-            >
-              <option value="user">user</option>
-              <option value="trainer">trainer</option>
-            </select>
-          </td>
-          <td className="py-2 px-4 flex justify-end">
-            <button
-              type="button"
-              className="text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-              onClick={handleAdd}
-            >
-              Add
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+                <td className="py-2 px-4">
+                  <input
+                    type="text"
+                    value={user.username}
+                    className="w-full bg-transparent"
+                    onChange={(e) => handleInputChange(user.user_id, 'username', e.target.value)}
+                  />
+                </td>
+                <td className="py-2 px-4">
+                  <input
+                    type="text"
+                    value={user.email}
+                    className="w-full bg-transparent"
+                    onChange={(e) => handleInputChange(user.user_id, 'email', e.target.value)}
+                  />
+                </td>
+                <td className="py-2 px-4">
+                  <select
+                    value={user.userrole}
+                    className="bg-transparent"
+                    onChange={(e) => handleInputChange(user.user_id, 'userrole', e.target.value)}
+                  >
+                    <option value="user">user</option>
+                    <option value="trainer">trainer</option>
+                  </select>
+                </td>
+                <td className="py-2 px-4 flex justify-end space-x-2">
+                  <button
+                    type="button"
+                    className="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                    onClick={() => handleSave(user)}
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                    onClick={() => handleDelete(user.user_id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td className="py-2 px-4">
+                <input
+                  type="text"
+                  value={newUser.username}
+                  className="w-full bg-transparent"
+                  placeholder="New Name"
+                  onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+                />
+              </td>
+              <td className="py-2 px-4">
+                <input
+                  type="text"
+                  value={newUser.email}
+                  className="w-full bg-transparent"
+                  placeholder="New Email"
+                  onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                />
+              </td>
+              <td className="py-2 px-4">
+                <select
+                  value={newUser.userrole}
+                  className="bg-transparent"
+                  onChange={(e) => setNewUser({ ...newUser, userrole: e.target.value })}
+                >
+                  <option value="user">user</option>
+                  <option value="trainer">trainer</option>
+                </select>
+              </td>
+              <td className="py-2 px-4 flex justify-end">
+                <button
+                  type="button"
+                  className="text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                  onClick={handleAdd}
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
+  
 };
 
 export default Users;

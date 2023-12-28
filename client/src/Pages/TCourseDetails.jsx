@@ -7,7 +7,7 @@ const TCourseDetails = () => {
   return (
     <div>
       <div className="px-24 py-28 bg-[#f5f5f5]">
-      <TUserList/>
+      
       <TDietaryschedule/>
       <TTrainingschedule/>
       

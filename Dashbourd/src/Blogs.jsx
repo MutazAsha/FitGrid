@@ -243,52 +243,53 @@ const Blogs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center ml-20 items-center">
-    <table className="w-9/12 h-5/6 bg-[#f5f5f5] my-6 md:ml-24 px-10 py-8 rounded-lg shadow-md">
-      <thead className="bg-red-700 text-white "> {/* Use red-700 for the header background */}
-          <tr>
-            <th className="py-2 px-4 ">Image</th>
-            <th className="py-2 px-4">Title</th>
-            <th className="py-2 px-4">Content</th>
-            <th className="py-2 px-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {blogs.map((blog, index) => (
-            <tr
-              key={index}
-              className={`border-b hover:bg-gray-100 ${index % 2 === 0 ? 'bg-white' : ''}`}
-            >
-              <td className="py-2 px-4 flex justify-center">
-                {/* Set max-width and max-height for the image */}
-                <img
-                  src={blog.articles_image}
-                  alt="Blog Image"
-                  style={{ maxWidth: '100px', maxHeight: '100px' }}
-                />
-              </td>
-     <td className="py-2 px-4 text-center max-w-[100px] overflow-hidden whitespace-nowrap">
-  {blog.title}
-</td>
-<td className="py-2 px-4 text-center max-w-[200px] overflow-hidden whitespace-nowrap">
-  {blog.content}
-</td>
-
-              <td className="py-2 px-4 flex justify-end">
-                <button
-                  type="button"
-                  className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                  onClick={() => handleDelete(blog.id)}
-                >
-                  Delete
-                </button>
-              </td>
+    <div className="min-h-screen bg-[#f5f5f5] flex justify-center items-center">
+      <div className="overflow-auto rounded-lg shadow w-full sm:max-w-3xl my-12 mx-4 sm:mx-8">
+        <table className="w-full bg-[#f5f5f5] table-auto">
+          <thead className="bg-red-700 text-white">
+            <tr>
+              <th className="py-2 px-4">Image</th>
+              <th className="py-2 px-4">Title</th>
+              <th className="py-2 px-4">Content</th>
+              <th className="py-2 px-4">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {blogs.map((blog, index) => (
+              <tr
+                key={index}
+                className={`border-b hover:bg-gray-100 ${index % 2 === 0 ? 'bg-white' : ''}`}
+              >
+                <td className="py-2 px-4 flex justify-center">
+                  <img
+                    src={blog.articles_image}
+                    alt="Blog Image"
+                    style={{ maxWidth: '100px', maxHeight: '100px' }}
+                  />
+                </td>
+                <td className="py-2 px-4 text-center max-w-[100px] overflow-hidden whitespace-nowrap">
+                  {blog.title}
+                </td>
+                <td className="py-2 px-4 text-center max-w-[200px] overflow-hidden whitespace-nowrap">
+                  {blog.content}
+                </td>
+                <td className="py-2 px-4 flex justify-end">
+                  <button
+                    type="button"
+                    className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                    onClick={() => handleDelete(blog.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
+  
 };
 
 export default Blogs;

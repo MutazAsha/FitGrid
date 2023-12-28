@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import only once
 import { useCookies } from 'react-cookie';
 import Cookies from 'js-cookie';
 
 const SignIn = () => {
-  const history = useNavigate();
+  const navigate = useNavigate(); // Use it directly without alias
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,40 +16,45 @@ const SignIn = () => {
       setError('Username and password are required.');
       return;
     }
-
+  
     try {
       setLoading(true);
       const response = await axios.post('http://localhost:8080/login', {
         usernameOrEmail: username,
         password: password,
       });
-
-      // Log the entire response to inspect its structure
-      console.log('Response:', response);
-
-      const token = response.data.accessToken; // Make sure to access the correct property
-      const user_id = response.data.Id; // Make sure to access the correct property
-      const role_id = response.data.userRole; 
-      console.log('Token:', token);
-
+  
+      // console.log('Response:', response);
+  
+      const token = response.data.accessToken;
+      const user_id = response.data.Id;
+      const role_id = response.data.userRole;
+  
+      // console.log('Token:', token);
+  
       Cookies.set('token', token);
       Cookies.set('user_id', user_id);
       Cookies.set('role_id', role_id);
-
-
+  
       setError('Sign-in successful');
-      history('/');
-      alert('Sign-in successful'); // Adjust alert message based on your requirements
-      console.log('Sign-in successful:', response.data);
+      // console.log(role_id);
+      if (role_id === "admin") {
+        // console.log(role_id);
+        alert('Sign-in successful');
+        navigate('/Admin'); // Navigate to the Home route
+      } else {
+        alert('Not admin');
+      }
+      
+      // console.log('Sign-in successful:', response.data);
     } catch (error) {
       console.error('Sign-in error:', error);
-
-      // Adjust error message based on the structure of the error response
       setError('Sign-in failed. Username or password is invalid');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -77,29 +82,12 @@ const SignIn = () => {
         <br/><br/>
         <button
           onClick={handleSignIn}
-          className={`w-full p-3 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-md mt-4 hover:opacity-90 ${loading && 'opacity-50 cursor-not-allowed'}`}
+          className={`w-full p-3 bg-gradient-to-r from-red-700 to-red-800 text-white rounded-md mt-4 hover:opacity-90 ${loading && 'opacity-50 cursor-not-allowed'}`}
           disabled={loading}
         >
           {loading ? 'Signing In...' : 'Sign In'}
         </button>
-        {/* <br/><br/>
-        <p className="text-center text-sm text-gray-700">
-          Don't have an account yet?
-          <a href="/Signup" className="font-semibold text-indigo-500 hover:underline focus:text-indigo-800 focus:outline-none">
-            Sign up
-          </a>.
-        </p>
-        <div className="mt-6">
-          <a href='http://localhost:5000/auth/google' className="flex items-center justify-center bg-gray-200 p-3 rounded-md">
-            <img
-              className="w-6 h-6 mr-2"
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              loading="lazy"
-              alt="google logo"
-            />
-            <span>Login with Google</span>
-          </a>
-        </div> */}
+        
       </div>
     </div>
   );

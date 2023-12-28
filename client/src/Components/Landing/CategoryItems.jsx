@@ -9,7 +9,7 @@ const CategoryItems = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/plans/getAllCategories")
+      .get("http://localhost:8080/categories")
       .then((response) => {
         setData(response.data);
       })
@@ -34,17 +34,18 @@ const CategoryItems = () => {
     <div className="px-4 py-20 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20  ">
       <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 w-full">
         {currentItems.map((item, index) => (
-          <Link to={`/category/${item.title}`} key={index}>
-            <div className="relative overflow-hidden transition duration-300 transform rounded shadow-lg lg:hover:-translate-y-2 hover:shadow-2xl h-[20rem]">
+          <Link to={`/category/${item.category_name}`} >
+            <div key={index} className="relative overflow-hidden transition duration-300 transform rounded shadow-lg lg:hover:-translate-y-2 hover:shadow-2xl h-[20rem]">
               <img
                 className="object-cover w-full h-[20rem]"
-                src={item.image}
+                src={item.category_image_url}
                 alt={`Product Image ${index + 1}`}
               />
-              <div className="absolute inset-0 flex flex-col justify-start px-5 py-4 text-start transition-opacity duration-300">
-                <p className="font-bold text-white text-1xl">{item.category}</p>
-                <div className="flex items-center justify-center space-x-3">
-                  {/* Additional content here */}
+              <div className="absolute inset-0 flex flex-col justify-end px-5 py-4 text-start transition-opacity duration-300 bg-gradient-to-t from-black to-transparent">
+                <p className="font-bold text-white text-2xl mb-2">{item.category_name}</p>
+                <div className="flex items-center justify-between text-gray-300">
+                  <span>Explore Now</span>
+               
                 </div>
               </div>
             </div>

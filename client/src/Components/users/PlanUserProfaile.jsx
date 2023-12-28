@@ -94,8 +94,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Course = () => {
+  const [cookie] = useCookies(["user_id"]);
   const [courses, setCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 6;
@@ -118,6 +120,9 @@ const Course = () => {
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
   const totalPages = Math.ceil(courses.length / coursesPerPage);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="ml-10 lg:ml-44 my-10">
@@ -138,39 +143,44 @@ const Course = () => {
                 <p className="w-[20rem] mb-3 text-sm text-gray-700 dark:text-gray-400">
                   {course.description}
                 </p>
+                <div className="flex justify-center">
                 <Link
-                  to={`/course-details/${course.id}`}
+                  to={`/course-details/${cookie.user_id}`}
                   className="inline-block px-4 py-2 text-sm font-bold text-white bg-gray-800 rounded-full hover:bg-gray-700 focus:outline-none"
                 >
                   Read More
                 </Link>
+                </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="col-span-full flex justify-center mt-4">
+        <div className="flex justify-center mt-8">
           <button
-            className="mx-2 p-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none rounded-full"
-            onClick={() => paginate(currentPage - 1)}
+            className={`mx-2 p-2 bg-black text-white hover:bg-red-700 focus:outline-none rounded-md ${
+              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
             Prev
           </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => (
+          {Array.from({ length: totalPages }).map((_, index) => (
             <button
-              key={number}
-              onClick={() => paginate(number)}
-              className={`mx-2 p-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none rounded-full ${
-                currentPage === number ? "bg-gray-800" : ""
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`mx-2 p-2 bg-red-700 text-white hover:bg-black focus:outline-none rounded-md ${
+                currentPage === index + 1 ? "bg-gray-800" : ""
               }`}
-              style={{ width: "40px", height: "40px", borderRadius: "50%" }}
             >
-              {number}
+              {index + 1}
             </button>
           ))}
           <button
-            className="mx-2 p-2 bg-gray-800 text-white hover.bg-gray-700 focus:outline-none rounded-full"
-            onClick={() => paginate(currentPage + 1)}
+            className={`mx-2 p-2 bg-black text-white hover:bg-red-700 focus:outline-none rounded-md ${
+              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
             Next

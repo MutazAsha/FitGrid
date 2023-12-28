@@ -255,15 +255,15 @@ const Blog = () => {
     blog.isdeleted !== 'true' && (
       <div key={blog.id} className="bg-white rounded-md overflow-hidden shadow-lg  sm:w-[100%] md:w-[98%] lg:w-[100%]">
         <Link to="#">
-          <img src={blog.articles_image} alt="" className="w-full h-40 object-cover" />
+          <img src={blog.articles_image} alt="" className="w-[20rem] h-40 object-cover" />
         </Link>
         <div className="p-4">
           <Link to="#">
-            <h5 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-xl font-bold text-gray-900 dark:text-white w-[15rem] line-clamp-1">
               {blog.title}
             </h5>
           </Link>
-          <p className="mb-3 text-sm text-gray-700 dark:text-gray-400">
+          <p className="mb-3 text-sm text-gray-700 dark:text-gray-400 w-[15rem] line-clamp-2">
             {blog.content}
           </p>
           <p className="mb-3 text-sm text-gray-700 dark:text-gray-400">
@@ -272,6 +272,7 @@ const Blog = () => {
           <p className="mb-3 text-sm text-gray-700 dark:text-gray-400">
             Published at: {blog.published_at}
           </p>
+          <div className="flex justify-center">
           <Link
   to={`/blog-details/${blog.id}`}
   className="inline-block px-3 py-2 text-xs lg:text-xs md:text-xs font-bold text-white bg-gray-800 rounded-full hover:bg-gray-700 focus:outline-none"
@@ -293,7 +294,7 @@ const Blog = () => {
   Delete
 </button>
 
-        
+        </div>
         </div>
       </div>
     )

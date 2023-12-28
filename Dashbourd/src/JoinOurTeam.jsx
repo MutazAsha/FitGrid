@@ -235,9 +235,9 @@ const JoinTeam = () => {
   const [newUser, setNewUser] = useState({ username: '', email: '', phone: '', city: '', area: '' });
 
   useEffect(() => {
-    axios.get('http://localhost:3000/Join')
+    axios.get('http://localhost:8080/join-requests')
       .then(response => {
-        setUsers(response.data);
+        setUsers(response.data.joinRequests);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -270,9 +270,10 @@ const JoinTeam = () => {
   };
 
   return (
-    <div className="p-4 flex justify-center mt-8 ml-36">
-      <table className="w-full sm:w-11/12 md:w-5/6 lg:w-4/5 xl:w-4/5 bg-white border border-gray-300">
-        <thead className="bg-red-700 text-white">
+    <div className="min-h-screen bg-[#f5f5f5] flex justify-center items-center">
+      <div className="overflow-auto rounded-lg shadow w-full sm:max-w-3xl my-12 mx-4 sm:mx-8">
+        <table className="w-full bg-[#f5f5f5] table-auto">
+          <thead className="bg-red-700 text-white">
           <tr>
             <th className="py-2 px-4">Username</th>
             <th className="py-2 px-4">Email</th>
@@ -340,6 +341,7 @@ const JoinTeam = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

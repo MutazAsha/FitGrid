@@ -5,7 +5,7 @@ import AboutUs from "../Components/website/AboutUs";
 
 const About = () => {
   return (
-    <div>
+    <div className="">
       <AboutUs />
     </div>
   );
